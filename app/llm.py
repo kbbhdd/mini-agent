@@ -7,15 +7,24 @@ if OPENAI_BASE_URL:
 
 client = OpenAI(**kwargs)
 
+
 def chat(messages):
+    """非流式，一次性返回"""
     resp = client.chat.completions.create(
         model=MODEL,
         messages=messages,
     )
     return resp.choices[0].message.content
 
-if __name__ == "__main__":
-    answer = chat([
-        {"role": "user", "content": "用一句话解释什么是 AI Agent"}
-    ])
-    print(answer)
+
+def chat_stream(messages):
+    """流式，逐块返回文字"""
+    stream = client.chat.completions.create(
+        model=MODEL,
+        messages=messages,
+        stream=True,
+    )
+    for chunk in stream:
+        delta = chunk.choices[0].delta
+        if delta and delta.content:
+            yield delta.content
