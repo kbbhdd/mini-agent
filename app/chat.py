@@ -4,6 +4,7 @@ from openai import OpenAIError
 
 from app.llm import LLMClient
 from app.messages import DEFAULT_SYSTEM_PROMPT, build_messages
+from app.agent import run_agent
 
 console = Console()
 
@@ -72,11 +73,9 @@ def main():
         history.append({"role": "user", "content": user_input})
 
         console.print("[bold magenta]AI：[/bold magenta]", end="")
-        reply = ""
         try:
-            for piece in llm.chat_stream(build_messages(history, system_prompt)):
-                console.print(piece, end="", soft_wrap=True)
-                reply += piece
+            reply = run_agent(llm, build_messages(history, system_prompt))
+            console.print(reply, soft_wrap=True)
         except OpenAIError as e:
             console.print(f"\n[red]调用模型出错：{e}[/red]")
             history.pop()
