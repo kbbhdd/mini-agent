@@ -1,5 +1,7 @@
 import re
 
+from app.tools.registry import register
+
 ALLOWED = re.compile(r"^[\d+\-*/().\s]+$")
 
 
@@ -36,6 +38,4 @@ CALCULATOR_SCHEMA = {
 }
 
 
-TOOL_MAP = {
-    "calculator": calculator,
-}
+register("calculator", CALCULATOR_SCHEMA, calculator)

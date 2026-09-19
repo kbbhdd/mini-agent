@@ -5,6 +5,8 @@ from openai import OpenAIError
 from app.llm import LLMClient
 from app.messages import DEFAULT_SYSTEM_PROMPT, build_messages
 from app.agent import run_agent
+from app.trace import Trace
+from app.agent import run_agent
 
 console = Console()
 
@@ -13,6 +15,8 @@ HELP_TEXT = """
   /system <内容>   修改系统提示词
   /system          查看当前系统提示词
   /reset           恢复默认系统提示并清空对话
+  /trace           查看工具调用记录
+  /clear-trace     清空调用记录
   clear            清空对话历史
   help             查看帮助
   exit / quit      退出
@@ -28,6 +32,7 @@ def main():
 
     llm = LLMClient()
     history = []
+    trace = Trace()
     system_prompt = DEFAULT_SYSTEM_PROMPT
 
     while True:
@@ -64,6 +69,15 @@ def main():
         if lower == "/system":
             console.print(f"[cyan]当前系统提示：[/cyan]{system_prompt}")
             continue
+        
+        if lower == "/trace":
+            console.print(trace.dump())
+            continue
+
+        if lower == "/clear-trace":
+            trace.clear()
+            console.print("[dim]调用记录已清空。[/dim]")
+            continue
 
         if lower.startswith("/system "):
             system_prompt = user_input[len("/system "):].strip()
@@ -71,10 +85,10 @@ def main():
             continue
 
         history.append({"role": "user", "content": user_input})
-
+        
         console.print("[bold magenta]AI：[/bold magenta]", end="")
         try:
-            reply = run_agent(llm, build_messages(history, system_prompt))
+            reply = run_agent(llm, build_messages(history, system_prompt),trace=trace)
             console.print(reply, soft_wrap=True)
         except OpenAIError as e:
             console.print(f"\n[red]调用模型出错：{e}[/red]")
