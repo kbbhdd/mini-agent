@@ -1,7 +1,9 @@
 openai
 python-dotenv
 fastapi
-uvicorn
+uvicorn[standard]
 pytest
 rich
 numpy
+streamlit
+requests
