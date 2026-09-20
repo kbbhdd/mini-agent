@@ -10,6 +10,7 @@ from app.tools.registry import get_fn, get_schemas
 import app.tools.calculator  # noqa: F401
 import app.tools.time_tool   # noqa: F401
 import app.tools.file_reader # noqa: F401
+import app.tools.search_docs # noqa: F401
 
 MAX_ITERATIONS = 5
 TOOL_RETRIES = 2
