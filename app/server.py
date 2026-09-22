@@ -5,11 +5,13 @@ from app.agent import run_agent
 from app.llm import LLMClient
 from app.messages import DEFAULT_SYSTEM_PROMPT, build_messages
 from app.trace import Trace
+from app import observability
 
 app = FastAPI(title="Mini-Agent API")
 
 _llm = LLMClient()
 
+observability.init()
 
 class ChatRequest(BaseModel):
     message: str = Field(..., description="用户输入")
@@ -35,7 +37,7 @@ def chat(req: ChatRequest):
     messages.append({"role": "user", "content": req.message})
 
     reply = run_agent(_llm, messages, trace=trace)
-
+    observability.log_agent_run(messages, reply, trace)
     new_history = list(req.history)
     new_history.append({"role": "user", "content": req.message})
     new_history.append({"role": "assistant", "content": reply})

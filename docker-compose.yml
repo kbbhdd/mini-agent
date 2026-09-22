@@ -8,6 +8,9 @@ services:
     volumes:
       - ./docs:/app/docs
     restart: unless-stopped
+    environment:
+      - HTTP_PROXY=http://host.docker.internal:7897
+      - HTTPS_PROXY=http://host.docker.internal:7897
 
   frontend:
     build: .

@@ -1,0 +1,15 @@
+{"input": "2+3*4 等于几", "expect_tools": ["calculator"], "must_contain": ["14"]}
+{"input": "100 除以 7 保留两位小数", "expect_tools": ["calculator"], "must_contain": ["14.29"]}
+{"input": "(12+8)*3 等于多少", "expect_tools": ["calculator"], "must_contain": ["60"]}
+{"input": "现在几点了", "expect_tools": ["get_time"], "must_contain": []}
+{"input": "今天日期是多少", "expect_tools": ["get_time"], "must_contain": []}
+{"input": "读一下 docs/产品说明.txt", "expect_tools": ["read_file"], "must_contain": ["Mini-Agent"]}
+{"input": "公司请假流程是什么", "expect_tools": ["search_docs"], "must_contain": ["主管", "审批"]}
+{"input": "报销超过多少钱需要财务总监审批", "expect_tools": ["search_docs"], "must_contain": ["5000"]}
+{"input": "病假需要提供什么证明", "expect_tools": ["search_docs"], "must_contain": ["医院"]}
+{"input": "Mini-Agent 支持哪些功能", "expect_tools": ["search_docs"], "must_contain": ["计算器", "检索"]}
+{"input": "你好", "expect_tools": [], "must_contain": []}
+{"input": "你是谁", "expect_tools": [], "must_contain": []}
+{"input": "讲个笑话", "expect_tools": [], "must_contain": []}
+{"input": "介绍一下你自己", "expect_tools": [], "must_contain": []}
+{"input": "谢谢", "expect_tools": [], "must_contain": []}

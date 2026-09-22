@@ -18,3 +18,5 @@ CHUNK_SIZE = 500       # 每段文字最多字符数
 CHUNK_OVERLAP = 100    # 相邻段之间重叠的字符数
 TOP_K = 3              # 检索返回最相关的前 K 段
 DOCS_DIR = "docs"      # 文档目录
+
+LLM_RPM = int(os.getenv("LLM_RPM", "0"))  # 0 表示不限速

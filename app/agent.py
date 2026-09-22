@@ -39,11 +39,7 @@ def run_agent(llm, messages, trace=None):
     tools = get_schemas()
 
     for _ in range(MAX_ITERATIONS):
-        response = llm.client.chat.completions.create(
-            model=llm.model,
-            messages=messages,
-            tools=tools,
-        )
+        response = llm.create_completion(messages, tools=tools)
         msg = response.choices[0].message
 
         if not msg.tool_calls:
